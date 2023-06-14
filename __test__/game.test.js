@@ -1,5 +1,5 @@
 const Game = require('../src/game').default
-const fs = require('fs')
+//const fs = require('fs')
 
 // describe('App', () => {
 //   it('Contains the compiled JavaScript', async (done) => {
@@ -9,8 +9,7 @@ const fs = require('fs')
 //       done()
 //     })
 //   })
-// }) 
-
+// })
 describe('Game', () => {
   let game, p1, p2
   beforeEach(() => {
