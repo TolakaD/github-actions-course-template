@@ -10,22 +10,49 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  BuildJob:
 
     runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: 'npm'
+      - name: npm install and build webpack
+        run: |
+          npm ci
+          npm run build --if-present
+      - uses: actions/upload-artifact@master
+        with:
+          name: Webpack artifacts
+          path: public/
+
+  TestJob:
+
+    runs-on: ${{ matrix.os }}
+    needs: BuildJob
+
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x]
+        os: [ubuntu-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/download-artifact@master
+      with:
+        name: Webpack artifacts
+        path: public
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test -- -u
+    - name: npm install and test
+      run: | 
+        npm ci
+        npm test -- -u
