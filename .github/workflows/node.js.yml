@@ -22,9 +22,10 @@ jobs:
       #     node-version: 14.x
       #     cache: 'npm'
       - name: npm install and build webpack
-        run: npm ci
-      - run: npm-install
-      - run: npm run build
+        run: |
+          npm ci
+          npm-install
+          npm run build
 
   TestJob:
 
