@@ -13,15 +13,17 @@ jobs:
   BuildJob:
 
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 14
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-          cache: 'npm'
+      # - name: Use Node.js 14
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 14.x
+      #     cache: 'npm'
       - name: npm install and build webpack
-        run: npm-install
+        run: npm ci
+      - run: npm-install
       - run: npm run build
 
   TestJob:
