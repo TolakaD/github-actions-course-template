@@ -1,1 +1,10 @@
 name: Team approval workflow
+
+on:
+    pull_request_review
+
+jobs:
+
+    LabelWhenApproved:
+
+        runs-on: ubuntu-latest
