@@ -16,10 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: npm install and build webpack
-        uses: actions/setup-node@v3
-      - run: |
-           npm-install
-           npm run build
+        run: npm-install
+      - run: npm run build
 
   TestJob:
 
