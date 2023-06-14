@@ -25,10 +25,15 @@ jobs:
         run: |
           npm ci
           npm run build --if-present
+      - uses: actions/upload-artifact@master
+        with:
+          name: Webpack artifacts
+          path: public/
 
   TestJob:
 
     runs-on: ${{ matrix.os }}
+    needs: BuildJob
 
     strategy:
       matrix:
@@ -38,6 +43,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/download-artifact@master
+      with:
+        name: Webpack artifacts
+        path: public
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
